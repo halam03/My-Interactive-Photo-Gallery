@@ -1,1 +1,76 @@
-# My-Interactive-Photo-Gallery
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive Photo Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    #main-photo {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border: 2px solid #333;
+      margin-bottom: 10px;
+    }
+    #caption {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .thumbnail-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .thumbnail {
+      width: 100px;
+      height: 70px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .thumbnail:hover, .thumbnail.selected {
+      border-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Photo Gallery</h1>
+
+  <img id="main-photo" src="https://picsum.photos/id/1015/800/500" alt="Main Photo" />
+  <div id="caption">Mountain View</div>
+
+  <div class="thumbnail-container">
+    <img class="thumbnail selected" src="https://picsum.photos/id/1015/100/70" alt="Mountain View" data-full="https://picsum.photos/id/1015/800/500" data-caption="Mountain View" />
+    <img class="thumbnail" src="https://picsum.photos/id/1016/100/70" alt="City Skyline" data-full="https://picsum.photos/id/1016/800/500" data-caption="City Skyline" />
+    <img class="thumbnail" src="https://picsum.photos/id/1018/100/70" alt="Forest Path" data-full="https://picsum.photos/id/1018/800/500" data-caption="Forest Path" />
+    <img class="thumbnail" src="https://picsum.photos/id/1020/100/70" alt="Beach" data-full="https://picsum.photos/id/1020/800/500" data-caption="Beach" />
+  </div>
+
+  <script>
+    const mainPhoto = document.getElementById('main-photo');
+    const caption = document.getElementById('caption');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', () => {
+        // Cập nhật ảnh lớn
+        mainPhoto.src = thumbnail.dataset.full;
+        mainPhoto.alt = thumbnail.alt;
+        // Cập nhật caption
+        caption.textContent = thumbnail.dataset.caption;
+        // Xoá chọn ở ảnh cũ
+        thumbnails.forEach(t => t.classList.remove('selected'));
+        // Thêm chọn ảnh mới
+        thumbnail.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>
